@@ -1,6 +1,7 @@
 package com.pwojcieszak.redditCloneBackend.service;
 
 import com.pwojcieszak.redditCloneBackend.dto.RegisterRequest;
+import com.pwojcieszak.redditCloneBackend.exceptions.SpringRedditException;
 import com.pwojcieszak.redditCloneBackend.model.NotificationEmail;
 import com.pwojcieszak.redditCloneBackend.model.User;
 import com.pwojcieszak.redditCloneBackend.model.VerificationToken;
@@ -8,11 +9,11 @@ import com.pwojcieszak.redditCloneBackend.repository.UserRepository;
 import com.pwojcieszak.redditCloneBackend.repository.VerificationTokenRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -52,4 +53,17 @@ public class AuthService {
     }
 
 
+    public void verifyAccount(String token) {
+        Optional<VerificationToken> verificationToken = verificationTokenRepository.findByToken(token);
+        verificationToken.orElseThrow(() -> new SpringRedditException(("Invalid Token")));
+        fetchUserAndEnable(verificationToken.get());
+    }
+    @Transactional
+    public void fetchUserAndEnable(VerificationToken verificationToken) {
+        String username = verificationToken.getUser().getUsername();
+        User user = userRepository.findByUsername(username).orElseThrow(() ->
+                new SpringRedditException("User not found with name - " + username));
+        user.setEnabled(true);
+        userRepository.save(user);
+    }
 }
