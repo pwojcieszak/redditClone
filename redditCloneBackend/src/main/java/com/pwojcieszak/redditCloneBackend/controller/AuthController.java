@@ -1,5 +1,6 @@
 package com.pwojcieszak.redditCloneBackend.controller;
 
+import com.pwojcieszak.redditCloneBackend.dto.LoginRequest;
 import com.pwojcieszak.redditCloneBackend.dto.RegisterRequest;
 import com.pwojcieszak.redditCloneBackend.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -23,5 +24,10 @@ public class AuthController {
     public ResponseEntity<String> verifyAccount(@PathVariable String token){
         authService.verifyAccount(token);
         return new ResponseEntity<>("Account Activated Successfully", HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public void login(@RequestBody LoginRequest loginRequest){
+        authService.login(loginRequest);
     }
 }
