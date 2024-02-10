@@ -16,7 +16,6 @@ import org.springframework.mail.MailException;
 @Slf4j
 public class MailService {
     private final JavaMailSender mailSender;
-    private final MailContentBuilder mailContentBuilder;
 
     @Async
     void sendMail(NotificationEmail notificationEmail) {
@@ -29,7 +28,7 @@ public class MailService {
         };
         try {
             mailSender.send(messagePreparator);
-            log.info("Activation email sent!!");
+            log.info("Notification email sent!!");
         } catch (MailException e) {
             log.error("Exception occurred when sending mail", e);
             throw new SpringRedditException("Exception occurred when sending mail to " + notificationEmail.getRecipient());
