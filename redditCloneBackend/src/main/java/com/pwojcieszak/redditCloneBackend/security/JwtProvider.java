@@ -36,4 +36,8 @@ public class JwtProvider {
 
         return this.jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
+
+    public Long getJwtExpirationInMillis() {
+        return jwtExpirationInMillis;
+    }
 }
