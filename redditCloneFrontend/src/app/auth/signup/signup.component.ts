@@ -5,6 +5,9 @@ import { SignupRequestPayload } from './signup-request.payload';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../shared/auth.service';
 import { catchError, tap } from 'rxjs';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { error } from 'console';
 
 @Component({
   selector: 'app-signup',
@@ -21,7 +24,8 @@ export class SignupComponent implements OnInit{
   signupRequestPayload: SignupRequestPayload;
   signupForm!: FormGroup;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router,
+    private toastr: ToastrService) {
     this.signupRequestPayload = {
       username: '',
       email: '',
@@ -45,8 +49,14 @@ export class SignupComponent implements OnInit{
 
       this.authService.signup(this.signupRequestPayload)
         .pipe(
-          tap(data => {
-            console.log(data)
+          tap({
+            next: () => {
+              this.router.navigate(['/login'],
+              { queryParams: { registered: 'true'} }
+          )},
+            error: (error) => {
+              this.toastr.error('Registration failed! Please try again');
+            }
           })
         )
         .subscribe();

@@ -4,6 +4,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { LoginRequestPayload } from './login-request.payload';
 import { AuthService } from '../shared/auth.service';
 import { tap, throwError } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -18,10 +20,11 @@ import { tap, throwError } from 'rxjs';
 export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
   loginRequestPayload: LoginRequestPayload;
-  isError: boolean;
+  isError!: boolean;
+  registerSuccessMessage!: string;
 
-  constructor(private authService: AuthService) { 
-    this.isError = false;
+  constructor(private authService: AuthService, private router: Router,
+    private toastr: ToastrService, private activatedRoute: ActivatedRoute) { 
     this.loginRequestPayload = {
       username: ' ',
       password: ' '
@@ -29,10 +32,21 @@ export class LoginComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.isError = false;
     this.loginForm = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
     })
+
+    this.activatedRoute.queryParams
+    .subscribe(params => {
+      if (params['registered'] !== undefined && params['registered'] === 'true') {
+        this.toastr.success('Signup Successful');
+        this.registerSuccessMessage = 'Please Check your inbox for activation email '
+          + 'activate your account before you Login!';
+      }
+      else this.registerSuccessMessage = '';
+    });
   }
 
   login() {
@@ -42,9 +56,17 @@ export class LoginComponent implements OnInit{
 
       this.authService.login(this.loginRequestPayload)
         .pipe(
-          tap(data => 
-            {console.log("Login successful")}
-            )
+          tap({
+            next: () => {
+              this.isError = false;
+              this.router.navigateByUrl('');
+              this.toastr.success('Login Successful');
+            },
+            error: (error) => {
+              this.isError = true;
+              throwError(() => error);
+            }
+          })
         )
         .subscribe();
     }

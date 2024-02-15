@@ -5,12 +5,16 @@ import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient } from '@angular/common/http';
 import { NgxWebstorageModule } from 'ngx-webstorage';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+import { ToastrModule, provideToastr } from 'ngx-toastr';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes), 
     provideClientHydration(), 
     provideHttpClient(),
-    importProvidersFrom(NgxWebstorageModule.forRoot({}))
+    importProvidersFrom(NgxWebstorageModule.forRoot({})),
+    provideAnimations(),
+    provideToastr()
   ]
 };
