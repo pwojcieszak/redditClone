@@ -2,12 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SignupRequestPayload } from './signup-request.payload';
-import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../shared/auth.service';
-import { catchError, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { error } from 'console';
 
 @Component({
   selector: 'app-signup',
