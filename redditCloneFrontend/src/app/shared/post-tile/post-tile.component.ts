@@ -10,8 +10,8 @@ import { VoteButtonComponent } from '../vote-button/vote-button.component';
   selector: 'app-post-tile',
   standalone: true,
   imports: [
-    FontAwesomeModule, 
-    RouterLink, 
+    FontAwesomeModule,
+    RouterLink,
     CommonModule,
     VoteButtonComponent
   ],
