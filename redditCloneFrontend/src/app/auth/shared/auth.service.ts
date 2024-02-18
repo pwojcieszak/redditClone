@@ -68,6 +68,19 @@ export class AuthService {
     return this.getJwtToken() != null;
   }
 
-
+  logout() {
+    this.httpClient.post('http://localhost:8080/api/auth/logout', this.refreshTokenPayload,
+      { responseType: 'text' }).subscribe({
+        next: (data) => {
+          console.log(data);
+      }, 
+        error: (error) => {
+          throwError(() => error);
+      }});
+    this.localStorage.clear('authenticationToken');
+    this.localStorage.clear('username');
+    this.localStorage.clear('refreshToken');
+    this.localStorage.clear('expiresAt');
+  }
 
 }

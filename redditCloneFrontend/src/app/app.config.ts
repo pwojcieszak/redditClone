@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
@@ -18,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideToastr({positionClass: 'toast-bottom-right'}),
     provideHttpClient(
       withInterceptorsFromDi(),
+      withFetch()
     ),
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ]
