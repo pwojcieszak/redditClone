@@ -15,7 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(), 
     importProvidersFrom(NgxWebstorageModule.forRoot({})),
     provideAnimations(),
-    provideToastr(),
+    provideToastr({positionClass: 'toast-bottom-right'}),
     provideHttpClient(
       withInterceptorsFromDi(),
     ),
