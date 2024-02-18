@@ -3,18 +3,22 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { NgxWebstorageModule } from 'ngx-webstorage';
-import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
-import { ToastrModule, provideToastr } from 'ngx-toastr';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr } from 'ngx-toastr';
+import { TokenInterceptor } from './token-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes), 
     provideClientHydration(), 
-    provideHttpClient(),
     importProvidersFrom(NgxWebstorageModule.forRoot({})),
     provideAnimations(),
-    provideToastr()
+    provideToastr(),
+    provideHttpClient(
+      withInterceptorsFromDi(),
+    ),
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ]
 };
