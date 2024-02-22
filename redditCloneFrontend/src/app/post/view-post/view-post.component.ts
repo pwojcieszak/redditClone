@@ -10,6 +10,7 @@ import { PostService } from '../../shared/post.service';
 import { throwError } from 'rxjs';
 import { CommentPayload } from '../../comment/comment.payload';
 import { CommentService } from '../../comment/comment.service';
+import { AuthService } from '../../auth/shared/auth.service';
 
 @Component({
   selector: 'app-view-post',
@@ -30,10 +31,11 @@ export class ViewPostComponent implements OnInit{
   post!: PostModel;
   commentForm: FormGroup;
   commentPayload: CommentPayload;
-  comments?: CommentPayload[];
+  comments!: CommentPayload[];
+  isLoggedIn!: boolean;
 
   constructor(private postService: PostService, private activateRoute: ActivatedRoute,
-    private commentService: CommentService, private router: Router) {
+    private commentService: CommentService, private authService: AuthService) {
     this.postId = this.activateRoute.snapshot.params['id'];
 
     this.commentForm = new FormGroup({
@@ -48,6 +50,7 @@ export class ViewPostComponent implements OnInit{
   ngOnInit(): void {
     this.getPostById();
     this.getCommentsForPost();
+    this.isLoggedIn = this.authService.isLoggedIn();
   }
 
   postComment() {

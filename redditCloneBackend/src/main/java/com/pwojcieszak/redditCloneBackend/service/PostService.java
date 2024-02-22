@@ -49,7 +49,7 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public List<PostResponse> getAllPosts() {
-        return postRepository.findAll()
+        return postRepository.findAllByOrderByCreatedDateDesc()
                 .stream()
                 .map(postMapper::mapToDto)
                 .collect(toList());
@@ -59,7 +59,7 @@ public class PostService {
     public List<PostResponse> getPostsBySubreddit(Long subredditId) {
         Subreddit subreddit = subredditRepository.findById(subredditId)
                 .orElseThrow(() -> new SubredditNotFoundException(subredditId.toString()));
-        List<Post> posts = postRepository.findAllBySubreddit(subreddit);
+        List<Post> posts = postRepository.findAllBySubredditOrderByCreatedDateDesc(subreddit);
         return posts.stream().map(postMapper::mapToDto).collect(toList());
     }
 
@@ -67,7 +67,7 @@ public class PostService {
     public List<PostResponse> getPostsByUsername(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
-        return postRepository.findByUser(user)
+        return postRepository.findByUserOrderByCreatedDateDesc(user)
                 .stream()
                 .map(postMapper::mapToDto)
                 .collect(toList());

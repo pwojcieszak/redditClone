@@ -2,6 +2,7 @@ html{
   padding: 0;
   height: 100%;  
 }
+
 body{
   margin-top: 63px;
   height: 100%; 
@@ -29,4 +30,9 @@ input.ng-invalid.ng-touched {
   text-transform: uppercase;
   padding: 3px 16px;
   opacity: 1;
+  margin: 5px;
+}
+
+.row{
+  margin-bottom: 10px;
 }

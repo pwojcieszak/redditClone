@@ -9,7 +9,7 @@
           <div class="col-md-11">
             <span>
               <span class="subreddit-text"><a class="post-url" href="">{{post.subredditName}}</a></span>
-              <span> . Posted
+              <span>. Posted
                 <span> {{post.duration}} </span>
                 by              
                 <a class="username" href="">{{post.userName}}</a>
@@ -20,15 +20,24 @@
             <div>
               <p class="post-text" [innerHtml]="post.description"></p>
             </div>
-            <div class="post-comment">
+            <hr class="divider"/>
+            <div class="post-comment" *ngIf="!isLoggedIn">
               <form [formGroup]="commentForm" (ngSubmit)="postComment()">
                 <div class="form-group">
                   <textarea class="form-control" [formControlName]="'text'" placeholder="Your Thoughts?"></textarea>
                 </div>
-                <button type="submit" class="login float-right">Comment</button>
+                <button style='background-color: grey; cursor: not-allowed;'type="submit" class="login float-end">Log in to Comment</button>
               </form>
             </div>
-            <div style="margin-top: 60px;" *ngFor="let comment of comments">
+            <div class="post-comment" *ngIf="isLoggedIn">
+              <form [formGroup]="commentForm" (ngSubmit)="postComment()">
+                <div class="form-group">
+                  <textarea class="form-control" [formControlName]="'text'" placeholder="Your Thoughts?"></textarea>
+                </div>
+                <button type="submit" class="login float-end">Comment</button>
+              </form>
+            </div>
+            <div *ngFor="let comment of comments">
               <div class="comment">
                 <div class="username">
                   <a routerLink="/user/comment.username">{{comment.userName}}</a>
@@ -38,7 +47,6 @@
                 </div>
                 <b>{{comment.text}}</b>
               </div>
-              <hr />
             </div>
           </div>
         </div>
