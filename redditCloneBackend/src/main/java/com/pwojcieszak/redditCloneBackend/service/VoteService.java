@@ -39,7 +39,19 @@ public class VoteService {
         } else {
             post.setVoteCount(post.getVoteCount() - 1);
         }
-        voteRepository.save(mapToVote(voteDto, post));
+
+        if(voteByPostAndUser.isPresent()) {
+            if (UPVOTE.equals(voteByPostAndUser.get().getVoteType())) {
+                post.setVoteCount(post.getVoteCount() - 1);
+            } else {
+                post.setVoteCount(post.getVoteCount() + 1);
+            }
+            Vote vote = voteByPostAndUser.get();
+            vote.setVoteType(voteDto.getVoteType());
+            voteRepository.save(vote);
+        }
+        else
+            voteRepository.save(mapToVote(voteDto, post));
         postRepository.save(post);
     }
 
