@@ -1,0 +1,23 @@
+<div class="reddit-body">
+  <div class="container">
+    <div class="row">
+      <hr />
+      <div class="col-md-9">
+        <app-post-tile [posts]="posts"></app-post-tile>
+      </div>
+      <div class="col-md-3">
+        <div class="side-details p-2">
+          <div style="color: black; font-weight: bold">Subreddit Details</div>
+          <hr />
+          <ul>
+            <li>ID: {{ subreddit.id }}</li>
+            <li>Name: {{ subreddit.name }}</li>
+            <li>Description: {{ subreddit.description }}</li>
+            <li>Post count: {{ subreddit.numberOfPosts }}</li>
+          </ul>
+        </div>      
+        <app-side-bar></app-side-bar>
+      </div>
+    </div>
+  </div>
+</div>

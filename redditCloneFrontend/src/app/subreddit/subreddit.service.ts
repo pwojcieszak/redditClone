@@ -18,4 +18,8 @@ export class SubredditService {
     return this.http.post<SubredditModel>('http://localhost:8080/api/subreddit',
       subredditModel);
   }
+
+  getSubreddit(subredditId: number): Observable<SubredditModel> {
+    return this.http.get<SubredditModel>('http://localhost:8080/api/subreddit/' + subredditId);
+  }
 }
