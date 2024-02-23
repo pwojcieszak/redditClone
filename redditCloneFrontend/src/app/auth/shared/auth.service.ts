@@ -81,6 +81,9 @@ export class AuthService {
     this.localStorage.clear('username');
     this.localStorage.clear('refreshToken');
     this.localStorage.clear('expiresAt');
+
+    this.loggedIn.emit(false);
+    this.username.emit(undefined);
   }
 
 }
