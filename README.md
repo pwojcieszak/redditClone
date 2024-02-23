@@ -1,3 +1,12 @@
+Swagger UI
+![image](https://github.com/pwojcieszak/redditClone/assets/86632496/8d1a0183-f968-4207-920d-88d3de8f2139)
+
+Swagger endpoint detail
+![image](https://github.com/pwojcieszak/redditClone/assets/86632496/3a2a47d1-140d-4a12-bdb2-d12e0c11e033)
+
+Swagger schemas (DTO's)
+![image](https://github.com/pwojcieszak/redditClone/assets/86632496/561baf82-3799-47f7-9124-0f0d41cd2040)
+
 Home
 ![image](https://github.com/pwojcieszak/redditClone/assets/86632496/5cac36a6-0978-4eb2-b966-d4ed56c425ed)
 
