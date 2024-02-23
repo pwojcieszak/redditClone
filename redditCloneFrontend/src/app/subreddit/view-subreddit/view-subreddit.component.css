@@ -1,6 +1,5 @@
-.sidebar-view-subreddit {
+.side-details {
     width: 312px;
-    height: 280px;
     --post-line-color: #ccc;
     border: 1px solid #ccc;
     margin-bottom: 10px;
